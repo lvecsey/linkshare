@@ -1,0 +1,18 @@
+
+Snipets for domain configuration file.
+
+At the top of the domain configuration file:
+
+            upstream linkshare_processors {
+              server 192.168.1.98:7320 weight=3;
+              server 192.168.1.99:7320 weight=3;
+              }
+
+Inside server block:
+
+	   location /cgi-bin/linkshare_processor {
+	      include fastcgi_params;
+	      #fastcgi_intercept_errors on;
+	      fastcgi_pass linkshare_processors;
+	      }        
+
