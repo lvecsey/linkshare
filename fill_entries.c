@@ -42,12 +42,6 @@ int entryfill_cb(const char *str, void *extra) {
 
 int fill_entries(char *entries_str, size_t len, critbit0_tree *cb) {
   
-  char *entries_str_default = "["
-	"{\"title\":\"Pay Chess, LLC.\",\"url\":\"https://www.paychess.com/\"}"
-	",{\"title\":\"Oath\",\"url\":\"https://www.oath.com/\"}"
-	",{\"title\":\"NASA\",\"url\":\"https://www.nasa.gov/\"}"	
-	"]";
-
   cbfill_t cbfill = { .base = entries_str, .len = len };
 
   cbfill.fill_ptr = cbfill.base;
@@ -58,8 +52,6 @@ int fill_entries(char *entries_str, size_t len, critbit0_tree *cb) {
   *cbfill.fill_ptr++ = ']';
 
   *cbfill.fill_ptr = 0;
-  
-  // strcpy(entries_str, entries_str_default);
 
   return 0;
 
