@@ -2,6 +2,8 @@ LinkShare FastCGI program
 
 Share links over the web.
 
+Note: You also need the frontend to this application which is available at https://github.com/lvecsey/lsweb
+
 This is the processing program which takes submissions from the lsbweb front end, and stores them in a critbit tree. The output is in the form of javascript files which are included by the frontend.
 
 Another form of output is specific entries (searches) from the critbit structure which is dynamically generated as javascript.
