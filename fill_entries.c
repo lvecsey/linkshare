@@ -7,8 +7,6 @@
 
 #include "critbit.h"
 
-#include "json_conv.h"
-
 typedef struct {
 
   char *fill_ptr;
@@ -28,17 +26,12 @@ int entryfill_cb(const char *str, void *extra) {
   
   if (str!=NULL) {
 
-    char strbuf[240];
-
-    retval = json_conv(str, strbuf, sizeof(strbuf));
-    
-    local_len = strlen(strbuf);
-
     if (cbfill->fill_ptr > cbfill->base + 1) {
       *cbfill->fill_ptr++ = ',';
     }
-    
-    memcpy(cbfill->fill_ptr, strbuf, local_len);
+
+    local_len = strlen(str);
+    memcpy(cbfill->fill_ptr, str, local_len);
     cbfill->fill_ptr += local_len;
     
   }
