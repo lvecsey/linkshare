@@ -40,6 +40,8 @@ void *mcast_listener(void *extra) {
   ssize_t bytes_read;
 
   long int n;
+
+  int retval;
   
   if ((fd=socket(AF_INET,SOCK_DGRAM,0)) < 0) {
     perror("socket");
@@ -93,10 +95,8 @@ void *mcast_listener(void *extra) {
       
       sprintf(prebuf, "sort=%0.6x&%s", 0x0, buf);
       
-      // retval = json_conv(buf, json_str, sizeof(json_str));
-      // critbit0_insert(mcast->ls_entries, json_str);
-
-      critbit0_insert(mcast->ls_entries, prebuf);    
+      retval = json_conv(prebuf, json_str, sizeof(json_str));
+      critbit0_insert(mcast->ls_entries, json_str);
 
     }
     
