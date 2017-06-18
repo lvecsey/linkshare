@@ -1,0 +1,6 @@
+
+See also the simple multicast sender and listener example:
+https://devel.rtems.org/browser/network-demos/mcast
+
+And a FastCGI example
+https://www.nginx.com/resources/wiki/start/topics/examples/fastcgiexample/
