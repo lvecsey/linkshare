@@ -21,6 +21,8 @@
 #include <uriparser/UriBase.h>
 #include <uriparser/Uri.h>
 
+#include <json.h>
+
 #include <string.h>
 
 #include "mcast_config.h"
@@ -30,6 +32,8 @@
 #include "critbit.h"
 
 #include "mcast.h"
+
+#include "vote.h"
 
 int main(int argc, char *argv[]) {
 
@@ -149,6 +153,14 @@ int main(int argc, char *argv[]) {
       
       size_t entries_len;
 
+      struct json_object *jobj;
+
+      // {"vote":"UP","title":"IBM","url":"https://www.ibm.com/"}
+      
+      jobj = json_tokener_parse(buf);
+
+      upvote(&ls_entries, "IBM", "https://www.example.com/");
+      
       retval = fill_entries(entries_str, 8192, &ls_entries);
       
       entries_len = strlen(entries_str);      
