@@ -88,11 +88,7 @@ int main(int argc, char *argv[]) {
   addr.sin_addr.s_addr=inet_addr(MCAST_GROUP);
   addr.sin_port=htons(MCAST_PORT);
 
-  critbit0_insert(&ls_entries, "linkshare_title=Pay Chess, LLC.&linkshare_url=https://www.paychess.com/");
-
-  critbit0_insert(&ls_entries, "linkshare_title=Oath&linkshare_url=https://www.oath.com/");    
-
-  critbit0_insert(&ls_entries, "linkshare_title=NASA&linkshare_url=https://www.nasa.gov/");
+  critbit0_insert(&ls_entries, "{\"sort\":\"000000\",\"title\":\"Pay Chess, LLC\",\"url\":\"https://www.paychess.com/\"}");
 
   retval = pthread_create(&mc_listen, NULL, mcast_listener, &mcast);
   if (retval != 0) {
