@@ -1,0 +1,14 @@
+LinkShare FastCGI program
+
+Share links over the web.
+
+This is the processing program which takes submissions from the lsbweb front end, and stores them in a critbit tree. The output is in the form of javascript files which are included by the frontend.
+
+Another form of output is specific entries (searches) from the critbit structure which is dynamically generated as javascript.
+
+
+
+
+There is also a sort value which is in hexadecimal and signifies a vote number.
+The critbit tree will index them in order since the sort value is first.
+So pulling out the first 100 entries of the tree will be the most popular entries.
