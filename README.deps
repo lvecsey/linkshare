@@ -1,0 +1,8 @@
+
+Requires the json-c library
+https://github.com/json-c/json-c.git
+
+UriParser
+http://uriparser.sourceforge.net/
+
+You may need to edit the paths in Makefile.am and rerun autoreconf, then configure.
