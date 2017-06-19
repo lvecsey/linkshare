@@ -122,20 +122,11 @@ int main(int argc, char *argv[]) {
       remaining -= bytes_read;
     }
 
-    if (buf[0] != '{' || !strncmp(buf, "linkshare_", 10)) {
+    if (buf[0] != '{' || !strncmp(buf, "linkshare_", 10) || !strncmp(buf, "sort=", 5)) {
 
       UriQueryListA *uqla;
 
       long int n;
-
-      {
-
-	if (sendto(fd,buf,len,0,(struct sockaddr *) &addr, sizeof(addr)) < 0) {
-	  perror("sendto");
-	  return -1;
-	}
-
-      }
 
     printf("Content-type: text/html; charset=utf-8\r\n"
                    "\r\n"
@@ -161,12 +152,15 @@ int main(int argc, char *argv[]) {
 
       struct json_object *jobj;
 
-      // {"vote":"UP","title":"IBM","url":"https://www.ibm.com/"}
+      if (sendto(fd,buf,len,0,(struct sockaddr *) &addr, sizeof(addr)) < 0) {
+	perror("sendto");
+	return -1;
+      }
+      
+      // {"vote":"UP","title":"Example","url":"https://www.example.com/"}
       
       jobj = json_tokener_parse(buf);
 
-      upvote(&ls_entries, "Example", "https://www.example.com/");
-      
       retval = fill_entries(entries_str, 8192, &ls_entries);
       
       entries_len = strlen(entries_str);      
