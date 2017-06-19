@@ -88,23 +88,34 @@ void *mcast_listener(void *extra) {
       exit(EXIT_FAILURE);
     }
 
-    {
-      char prebuf[512];
+    if (buf[0] == '{') {
 
-      memset(prebuf,0,sizeof(prebuf));
+      if (!strncmp(buf+1, "\"vote", 5)) {
+
+	upvote(mcast->ls_entries, "Example", "https://www.example.com/");
+
+      }
+
+      else if (!strncmp(buf+1, "\"linkshare_", 11)) {
       
-      sprintf(prebuf, "sort=%0.6x&%s", 0x0, buf);
+	char prebuf[512];
       
-      {
-	json_conv_t json_conv;
-	retval = fill_json_conv(&json_conv, prebuf); 
+	memset(prebuf,0,sizeof(prebuf));
+      
+	sprintf(prebuf, "sort=%0.6x&%s", 0x0, buf);
+      
+	{
+	  json_conv_t json_conv;
+	  retval = fill_json_conv(&json_conv, prebuf); 
 
-	retval = json_fwd_print(&json_conv, json_str, sizeof(json_str));
-	critbit0_insert(mcast->ls_entries, json_str);
+	  retval = json_fwd_print(&json_conv, json_str, sizeof(json_str));
+	  critbit0_insert(mcast->ls_entries, json_str);
 
-	retval = json_rev_print(&json_conv, json_str, sizeof(json_str));
-	critbit0_insert(mcast->ls_entries, json_str);
+	  retval = json_rev_print(&json_conv, json_str, sizeof(json_str));
+	  critbit0_insert(mcast->ls_entries, json_str);
 	
+	}
+
       }
 	
     }
