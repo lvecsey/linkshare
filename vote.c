@@ -97,6 +97,8 @@ typedef struct {
 
   char *title;
   char *url;
+
+  char vote_direction;
   
   critbit0_tree *ls_entries;
   
@@ -124,9 +126,14 @@ int rework_voting(const char *str, void *extra) {
       hexval = ptr;
 
       sprintf(delbuf, "{\"sort\":\"%.6s\",\"title\":\"%s\",\"url\":\"%s\"}", hexval, rework->title, rework->url);
-      
-      vote_increment_core(hexval);
 
+      switch(rework->vote_direction) {
+      case 'U':
+      case 'u': vote_increment_core(hexval); break;
+      case 'D':
+      case 'd': vote_decrement_core(hexval); break;
+      }
+	
       sprintf(insbuf, "{\"sort\":\"%.6s\",\"title\":\"%s\",\"url\":\"%s\"}", hexval, rework->title, rework->url);
       
       critbit0_insert(rework->ls_entries, insbuf);
@@ -144,7 +151,23 @@ int upvote(critbit0_tree *ls_entries, char *title, char *url) {
 
   char strbuf[512];
 
-  rework_t rework = { .title = title, .url = url, .ls_entries = ls_entries };
+  rework_t rework = { .title = title, .url = url, .ls_entries = ls_entries, .vote_direction = 'U' };
+  
+  int retval;
+  
+  sprintf(strbuf, "{\"title\":\"%s\",\"url\":\"%s\",\"sort\":\"", title, url);
+  
+  retval = critbit0_allprefixed(ls_entries, strbuf, rework_voting, &rework);
+  
+  return 0;
+  
+}
+
+int downvote(critbit0_tree *ls_entries, char *title, char *url) {
+
+  char strbuf[512];
+
+  rework_t rework = { .title = title, .url = url, .ls_entries = ls_entries, .vote_direction = 'D' };
   
   int retval;
   
