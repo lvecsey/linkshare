@@ -36,6 +36,8 @@ void *mcast_listener(void *extra) {
   u_int yes=1;
 
   char json_str[512];
+
+  json_conv_t json_conv;
   
   ssize_t bytes_read;
 
@@ -96,6 +98,22 @@ void *mcast_listener(void *extra) {
 
       }
 
+      else if (!strncmp(buf+1, "\"sort", 5)) {
+
+	retval = sscanf(buf,"{\"sort\":\"%x\",\"title\":\"%[^\"]\",\"url\":\"%[^\"]\"}", json_conv.linkshare_sort, json_conv.linkshare_title, json_conv.linkshare_url);
+
+	if (retval == 3) {
+
+	  retval = json_fwd_print(&json_conv, json_str, sizeof(json_str));
+	  critbit0_insert(mcast->ls_entries, json_str);
+
+	  retval = json_rev_print(&json_conv, json_str, sizeof(json_str));
+	  critbit0_insert(mcast->ls_entries, json_str);
+	  
+	}
+	
+      }
+      
       else if (!strncmp(buf+1, "\"linkshare_", 11)) {
       
 	char prebuf[512];
@@ -105,7 +123,6 @@ void *mcast_listener(void *extra) {
 	sprintf(prebuf, "sort=%0.6x&%s", 0x0, buf);
       
 	{
-	  json_conv_t json_conv;
 	  retval = fill_json_conv(&json_conv, prebuf); 
 
 	  retval = json_fwd_print(&json_conv, json_str, sizeof(json_str));
