@@ -20,6 +20,8 @@
 
 #include "mcast.h"
 
+#include <json.h>
+
 #include "json_conv.h"
 
 void *mcast_listener(void *extra) {
@@ -94,7 +96,28 @@ void *mcast_listener(void *extra) {
 
       if (!strncmp(buf+1, "\"vote", 5)) {
 
-	upvote(mcast->ls_entries, "Example", "https://www.example.com/");
+	struct json_object *jobj;
+
+	struct json_object *jobj_vote;
+	struct json_object *jobj_title;
+	struct json_object *jobj_url;
+
+	// {"vote":"UP","title":"Example","url":"https://www.example.com/"}
+      
+	jobj = json_tokener_parse(buf);
+
+	jobj_vote = json_object_object_get(jobj, "vote");      
+	jobj_title = json_object_object_get(jobj, "title");
+	jobj_url = json_object_object_get(jobj, "url");      
+      
+	if (jobj_vote != NULL) {
+
+	  char *title = json_object_get_string(jobj_title);
+	  char *url = json_object_get_string(jobj_url);
+
+	  upvote(mcast->ls_entries, title, url);
+	  
+	}
 
       }
 
