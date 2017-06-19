@@ -13,6 +13,9 @@ typedef struct {
 
   char *base;
   size_t len;
+
+  long int num_entries;
+  long int max_entries;
   
 } cbfill_t;
 
@@ -24,7 +27,7 @@ int entryfill_cb(const char *str, void *extra) {
 
   int retval;
   
-  if (str!=NULL) {
+  if (str!=NULL && cbfill->num_entries < cbfill->max_entries) {
 
     if (cbfill->fill_ptr > cbfill->base + 1) {
       *cbfill->fill_ptr++ = ',';
@@ -33,6 +36,8 @@ int entryfill_cb(const char *str, void *extra) {
     local_len = strlen(str);
     memcpy(cbfill->fill_ptr, str, local_len);
     cbfill->fill_ptr += local_len;
+
+    cbfill->num_entries++;
     
   }
   
@@ -44,6 +49,9 @@ int fill_entries(char *entries_str, size_t len, critbit0_tree *cb) {
   
   cbfill_t cbfill = { .base = entries_str, .len = len };
 
+  cbfill.num_entries = 0;
+  cbfill.max_entries = 100;
+  
   cbfill.fill_ptr = cbfill.base;
   *cbfill.fill_ptr++ = '[';
   
