@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     replace_str(linkshare_title, ' ', '+');
     
-    sprintf(strbuf, "linkshare_title=%s&linkshare_url=%s", linkshare_title, linkshare_url);
+    sprintf(strbuf, "{\"sort\"=\"000000\",\"title\"=\"%s\",\"url\"=\"%s\"}", linkshare_title, linkshare_url);
     
     len = strlen(strbuf);
     
