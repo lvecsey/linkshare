@@ -96,6 +96,10 @@ int main(int argc, char *argv[]) {
 
   critbit0_insert(&ls_entries, "{\"title\":\"Pay Chess, LLC\",\"url\":\"https://www.paychess.com/\",\"sort\":\"000000\"}");  
 
+  critbit0_insert(&ls_entries, "{\"sort\":\"000000\",\"title\":\"Example\",\"url\":\"https://www.example.com/\"}");
+
+  critbit0_insert(&ls_entries, "{\"title\":\"Example\",\"url\":\"https://www.example.com/\",\"sort\":\"000000\"}");  
+  
   retval = pthread_create(&mc_listen, NULL, mcast_listener, &mcast);
   if (retval != 0) {
     fprintf(stderr, "%s: Trouble with call to pthread_cast for multicast listener.\n", __FUNCTION__);
@@ -161,7 +165,7 @@ int main(int argc, char *argv[]) {
       
       jobj = json_tokener_parse(buf);
 
-      upvote(&ls_entries, "IBM", "https://www.example.com/");
+      upvote(&ls_entries, "Example", "https://www.example.com/");
       
       retval = fill_entries(entries_str, 8192, &ls_entries);
       
