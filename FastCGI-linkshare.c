@@ -21,8 +21,6 @@
 #include <uriparser/UriBase.h>
 #include <uriparser/Uri.h>
 
-#include <json.h>
-
 #include <string.h>
 
 #include "mcast_config.h"
@@ -170,18 +168,12 @@ int main(int argc, char *argv[]) {
     if (buf[0] == '{') {
       
       size_t entries_len;
-
-      struct json_object *jobj;
-
+      
       if (sendto(fd,buf,len,0,(struct sockaddr *) &addr, sizeof(addr)) < 0) {
 	perror("sendto");
 	return -1;
       }
       
-      // {"vote":"UP","title":"Example","url":"https://www.example.com/"}
-      
-      jobj = json_tokener_parse(buf);
-
       retval = fill_entries(entries_str, 8192, &ls_entries);
       
       entries_len = strlen(entries_str);      
