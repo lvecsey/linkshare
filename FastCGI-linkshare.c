@@ -35,6 +35,8 @@
 
 #include "vote.h"
 
+#include "json_conv.h"
+
 int main(int argc, char *argv[]) {
 
   critbit0_tree ls_entries = { .root = NULL };
@@ -128,21 +130,40 @@ int main(int argc, char *argv[]) {
 
       long int n;
 
-    printf("Content-type: text/html; charset=utf-8\r\n"
-                   "\r\n"
-	   "<HTML><HEAD>\n"
-	   "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=/?%s\">\n"
-                   "<title>FastCGI linkshare submission!</title>"
-	   "Request number %ld running on host <i>%s</i>\n"
-	   ,pass ? "success" : "failure"
-	   ,++count, env_SERVER_NAME!=NULL ? env_SERVER_NAME : "NULL");
+      char json_str[512];
 
-    printf("<pre>");
-    if (debug) puts(buf);
-    printf("</pre>");
-    printf("</body></html>");
+      size_t json_str_len;
+      
+      json_conv_t json_conv;
+      
+      retval = fill_json_conv(&json_conv, buf);
 
-    }
+      sprintf(json_conv.linkshare_sort, "%0.6x", 0x0);
+      
+      retval = json_fwd_print(&json_conv, json_str, sizeof(json_str));
+
+      json_str_len = strlen(json_str);
+      
+      if (sendto(fd,json_str,json_str_len,0,(struct sockaddr *) &addr, sizeof(addr)) < 0) {
+	perror("sendto");
+	return -1;
+      }
+      
+      printf("Content-type: text/html; charset=utf-8\r\n"
+	     "\r\n"
+	     "<HTML><HEAD>\n"
+	     "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=/?%s\">\n"
+	     "<title>FastCGI linkshare submission!</title>"
+	     "Request number %ld running on host <i>%s</i>\n"
+	     ,pass ? "success" : "failure"
+	     ,++count, env_SERVER_NAME!=NULL ? env_SERVER_NAME : "NULL");
+
+      printf("<pre>");
+      if (debug) puts(buf);
+      printf("</pre>");
+      printf("</body></html>");
+
+      }
       
     pass = 1;
 
