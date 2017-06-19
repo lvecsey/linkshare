@@ -95,9 +95,18 @@ void *mcast_listener(void *extra) {
       
       sprintf(prebuf, "sort=%0.6x&%s", 0x0, buf);
       
-      retval = json_conv(prebuf, json_str, sizeof(json_str));
-      critbit0_insert(mcast->ls_entries, json_str);
+      {
+	json_conv_t json_conv;
+	retval = fill_json_conv(&json_conv, prebuf); 
 
+	retval = json_fwd_print(&json_conv, json_str, sizeof(json_str));
+	critbit0_insert(mcast->ls_entries, json_str);
+
+	retval = json_rev_print(&json_conv, json_str, sizeof(json_str));
+	critbit0_insert(mcast->ls_entries, json_str);
+	
+      }
+	
     }
     
   }
