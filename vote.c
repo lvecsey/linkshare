@@ -123,11 +123,11 @@ int rework_voting(const char *str, void *extra) {
       ptr += 8;
       hexval = ptr;
 
-      sprintf(delbuf, "{\"sort\":\"%s\",\"title\":\"%s\",\"url\":\"%s\"}", hexval, rework->title, rework->url);
+      sprintf(delbuf, "{\"sort\":\"%.6s\",\"title\":\"%s\",\"url\":\"%s\"}", hexval, rework->title, rework->url);
       
       vote_increment_core(hexval);
 
-      sprintf(insbuf, "{\"sort\":\"%s\",\"title\":\"%s\",\"url\":\"%s\"}", hexval, rework->title, rework->url);
+      sprintf(insbuf, "{\"sort\":\"%.6s\",\"title\":\"%s\",\"url\":\"%s\"}", hexval, rework->title, rework->url);
       
       critbit0_insert(rework->ls_entries, insbuf);
       critbit0_delete(rework->ls_entries, delbuf);      
