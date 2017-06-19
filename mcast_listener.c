@@ -112,11 +112,20 @@ void *mcast_listener(void *extra) {
       
 	if (jobj_vote != NULL) {
 
+	  char *vote = json_object_get_string(jobj_vote);
 	  char *title = json_object_get_string(jobj_title);
 	  char *url = json_object_get_string(jobj_url);
 
-	  upvote(mcast->ls_entries, title, url);
-	  
+	  if (vote!=NULL) {
+	    if (vote[0] == 'U' || vote[0] == 'u') {
+	      upvote(mcast->ls_entries, title, url);
+	    }
+	    else if (vote[0] == 'D' || vote[0] == 'd') {
+	      downvote(mcast->ls_entries, title, url);
+	    }
+
+	  }
+	    
 	}
 
       }
