@@ -47,7 +47,7 @@ int fill_entries(char *entries_str, size_t len, critbit0_tree *cb) {
   cbfill.fill_ptr = cbfill.base;
   *cbfill.fill_ptr++ = '[';
   
-  critbit0_allprefixed(cb, "", entryfill_cb, &cbfill);
+  critbit0_allprefixed(cb, "{\"sort\":", entryfill_cb, &cbfill);
 
   *cbfill.fill_ptr++ = ']';
 
