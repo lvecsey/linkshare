@@ -8,11 +8,12 @@
 #include <uriparser/UriBase.h>
 #include <uriparser/Uri.h>
 
-int json_conv(char *query, char *json, size_t len) {
+#include "json_conv.h"
 
-  char linkshare_title[120];
-  char linkshare_url[120];
-  char linkshare_sort[20];
+int fill_json_conv(json_conv_t *json_conv, char *query) {
+
+  char *buf;
+  size_t len;
   
   UriUriA uri;
   UriQueryListA *queryList;
@@ -27,7 +28,7 @@ int json_conv(char *query, char *json, size_t len) {
   size_t linkshare_len;
 
   long int n;
-  
+
   if (uriDissectQueryMallocA(&queryList, &itemCount, query, query+query_len) != URI_SUCCESS) {
 
   }
@@ -36,31 +37,37 @@ int json_conv(char *query, char *json, size_t len) {
       
   for (n = 0; n < itemCount; n++) {
 
+    buf = json_conv->linkshare_url;
+    len = sizeof(json_conv->linkshare_url);
     if (uqla->value != NULL && !strncmp(uqla->key, "linkshare_url", 13)) {
-      memset(linkshare_url, 0, sizeof(linkshare_url));
+      memset(buf, 0, len);
       linkshare_len = strlen(uqla->value);
-      if (linkshare_len > sizeof(linkshare_url)) {
-	linkshare_len = sizeof(linkshare_url) - 1;
+      if (linkshare_len > len) {
+	linkshare_len = len - 1;
       }
-      strncpy(linkshare_url, uqla->value, linkshare_len);
+      strncpy(buf, uqla->value, linkshare_len);
     }
 
+    buf = json_conv->linkshare_title;
+    len = sizeof(json_conv->linkshare_title);
     if (uqla->value != NULL && !strncmp(uqla->key, "linkshare_title", 15)) {
-      memset(linkshare_title, 0, sizeof(linkshare_title));
+      memset(buf, 0, len);
       linkshare_len = strlen(uqla->value);
-      if (linkshare_len > sizeof(linkshare_title)) {
-	linkshare_len = sizeof(linkshare_title) - 1;
+      if (linkshare_len > len) {
+	linkshare_len = len - 1;
       }
-      strncpy(linkshare_title, uqla->value, linkshare_len);
+      strncpy(buf, uqla->value, linkshare_len);
     }
 
+    buf = json_conv->linkshare_sort;
+    len = sizeof(json_conv->linkshare_sort);    
     if (uqla->value != NULL && !strncmp(uqla->key, "sort", 4)) {
-      memset(linkshare_sort, 0, sizeof(linkshare_sort));
+      memset(buf, 0, len);
       linkshare_len = strlen(uqla->value);
-      if (linkshare_len > sizeof(linkshare_sort)) {
-	linkshare_len = sizeof(linkshare_sort) - 1;
+      if (linkshare_len > len) {
+	linkshare_len = len - 1;
       }
-      strncpy(linkshare_sort, uqla->value, linkshare_len);
+      strncpy(buf, uqla->value, linkshare_len);
     }
     
     uqla = uqla->next;
@@ -68,9 +75,27 @@ int json_conv(char *query, char *json, size_t len) {
   }
 
   uriFreeQueryListA(queryList);      
-  
-  retval = sprintf(json, "{\"sort\":\"%s\",\"title\":\"%s\",\"url\":\"%s\"}", linkshare_sort, linkshare_title, linkshare_url);
-  
+    
   return 0;
 
+}
+
+int json_fwd_print(json_conv_t *json_conv, char *json, size_t len) {
+
+  int retval;
+  
+  retval = sprintf(json, "{\"sort\":\"%s\",\"title\":\"%s\",\"url\":\"%s\"}", json_conv->linkshare_sort, json_conv->linkshare_title, json_conv->linkshare_url);
+
+  return 0;
+  
+}
+
+int json_rev_print(json_conv_t *json_conv, char *json, size_t len) {
+
+  int retval;
+  
+  retval = sprintf(json, "{\"title\":\"%s\",\"url\":\"%s\",\"sort\":\"%s\"}", json_conv->linkshare_title, json_conv->linkshare_url, json_conv->linkshare_sort);
+
+  return 0;
+  
 }
