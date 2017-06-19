@@ -15,8 +15,10 @@ int vote_increment_core(char *hexstr) {
   
   retval = sscanf(hexstr, "%x", &value);
 
-  value++;
-
+  if (value < 0xffffff) {
+    value++;
+  }
+    
   retval = sprintf(hexstr, "%0.6x", value);
 
   return 0;
@@ -31,8 +33,10 @@ int vote_decrement_core(char *hexstr) {
   
   retval = sscanf(hexstr, "%x", &value);
 
-  value--;
-
+  if (value > 0) {
+    value--;
+  }
+  
   retval = sprintf(hexstr, "%0.6x", value);
 
   return 0;
