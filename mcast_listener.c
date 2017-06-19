@@ -100,7 +100,7 @@ void *mcast_listener(void *extra) {
 
       else if (!strncmp(buf+1, "\"sort", 5)) {
 
-	retval = sscanf(buf,"{\"sort\":\"%x\",\"title\":\"%[^\"]\",\"url\":\"%[^\"]\"}", json_conv.linkshare_sort, json_conv.linkshare_title, json_conv.linkshare_url);
+	retval = sscanf(buf,"{\"sort\":\"%[^\"]\",\"title\":\"%[^\"]\",\"url\":\"%[^\"]\"}", json_conv.linkshare_sort, json_conv.linkshare_title, json_conv.linkshare_url);
 
 	if (retval == 3) {
 
