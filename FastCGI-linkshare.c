@@ -94,6 +94,8 @@ int main(int argc, char *argv[]) {
 
   critbit0_insert(&ls_entries, "{\"sort\":\"000000\",\"title\":\"Pay Chess, LLC\",\"url\":\"https://www.paychess.com/\"}");
 
+  critbit0_insert(&ls_entries, "{\"title\":\"Pay Chess, LLC\",\"url\":\"https://www.paychess.com/\",\"sort\":\"000000\"}");  
+
   retval = pthread_create(&mc_listen, NULL, mcast_listener, &mcast);
   if (retval != 0) {
     fprintf(stderr, "%s: Trouble with call to pthread_cast for multicast listener.\n", __FUNCTION__);
