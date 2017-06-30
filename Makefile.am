@@ -8,7 +8,7 @@ bin_PROGRAMS = FastCGI-linkshare linkshare-viewer linkshare-add
 FastCGI_linkshare_CFLAGS = $(AM_CFLAGS) -I$(HOME)/src/version-control/git/uriparser/include -I$(HOME)/src/version-control/git/json-c
 FastCGI_linkshare_LDFLAGS = -L$(HOME)/src/version-control/git/uriparser/.libs -L$(HOME)/src/version-control/git/json-c/.libs
 FastCGI_linkshare_SOURCES = FastCGI-linkshare.c critbit.c mcast_listener.c fill_entries.c json_conv.c fill_sortval.c vote.c
-FastCGI_linkshare_LDADD=-luriparser -ljson-c
+FastCGI_linkshare_LDADD=-luriparser -ljson-c -lfcgi
 
 linkshare_viewer_CFLAGS = $(AM_CFLAGS) -I$(HOME)/src/version-control/git/uriparser/include
 linkshare_viewer_LDFLAGS = -L$(HOME)/src/version-control/git/uriparser/.libs
