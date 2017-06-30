@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -38,7 +39,7 @@ void *mcast_listener(void *extra) {
   struct ip_mreq mreq;
   char buf[MSGBUFSIZE];
 
-  u_int yes=1;
+  uint32_t yes = 1;
 
   char json_str[512];
 
