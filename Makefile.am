@@ -1,7 +1,7 @@
 
 AM_LDFLAGS=-L$(HOME)/src/libgxkit -L$(prefix)/lib $(PRIMARY_LDFLAGS)
 
-AM_CFLAGS=-O3 -Wall -static
+AM_CFLAGS=-O3 -Wall -static -std=c99
 
 bin_PROGRAMS = FastCGI-linkshare linkshare-viewer linkshare-add
 
