@@ -8,3 +8,5 @@ http://uriparser.sourceforge.net/
 You may need to edit the paths in Makefile.am and rerun autoreconf, then configure.
 
 Also you may need to run sudo apt-get install libfcgi-dev
+
+For operation, you can also sudo apt-get install spawn-fcgi
