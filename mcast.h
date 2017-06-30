@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include <pthread.h>
+
 #include "critbit.h"
 
 typedef struct {
