@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
       printf("Content-type: text/html; charset=utf-8\r\n"
 	     "\r\n"
 	     "<HTML><HEAD>\n"
-	     "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=/?%s\">\n"
+	     "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=/linkshare/index.html?%s\">\n"
 	     "<title>FastCGI linkshare submission!</title>"
 	     "Request number %ld running on host <i>%s</i>\n"
 	     ,pass ? "success" : "failure"
