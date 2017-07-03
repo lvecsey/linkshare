@@ -1,11 +1,15 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
+
+#define __USE_MISC
+#define __USE_GNU
+
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include "mcast_config.h"
 
