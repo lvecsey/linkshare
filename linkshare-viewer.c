@@ -5,11 +5,15 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
 #include <time.h>
 #include <string.h>
 #include <stdio.h>
+
+#define __USE_MISC
+#define __USE_GNU
+
+#include <netinet/in.h>
+#include <arpa/inet.h>
 
 #include "mcast_config.h"
 
@@ -20,7 +24,7 @@ int main(int argc, char *argv[]) {
   struct ip_mreq mreq;
   char msgbuf[MSGBUFSIZE];
 
-  u_int yes=1;
+  uint32_t yes=1;
 
   if ((fd=socket(AF_INET,SOCK_DGRAM,0)) < 0) {
     perror("socket");
