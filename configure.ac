@@ -49,6 +49,7 @@ AC_CHECK_HEADERS(math.h)
 
 AC_SEARCH_LIBS([FCGI_Accept], [fcgi])
 AC_SEARCH_LIBS([pthread_join], [pthread])
+AC_SEARCH_LIBS([uriFreeQueryListA], [uriparser])
 
 AC_CHECK_FUNCS(qsort_r)
 AC_CHECK_FUNCS(socket)
